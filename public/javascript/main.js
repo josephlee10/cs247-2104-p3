@@ -53,9 +53,15 @@ var videoOn = 0;
     $("#submission input").keydown(function( event ) {
       if (event.which == 13) {
         if(has_emotions($(this).val())){
-          fb_instance_stream.push({m:username+": " +$(this).val(), v:cur_video_blob, c: my_color});
+
+          if ($("#snapradio").is(":checked") && videoOn == 1) {
+            fb_instance_stream.push({m:username+": " +$(this).val(), v:cur_video_blob, c: my_color, snap: true});
+          } else {
+            fb_instance_stream.push({m:username+": " +$(this).val(), v:cur_video_blob, c: my_color, snap: false});
+          }
+
         }else{
-          fb_instance_stream.push({m:username+": " +$(this).val(), c: my_color});
+          fb_instance_stream.push({m:username+": " +$(this).val(), c: my_color, snap: false});
         }
         $(this).val("");
       }
@@ -93,7 +99,7 @@ var videoOn = 0;
 
     // if a message has emotions AND if it's a snap, then delete the snap...
     if (has_emotions(data.m)) {
-      if ($("#snapradio").is(":checked") && videoOn == 1) {
+      if (data.snap == true) {
         deleteMessage(data.m, globalid);
       } 
     }
@@ -117,10 +123,6 @@ var videoOn = 0;
       var childid = $(childidElem).text();
 
       if (childid == id) {
-
-        console.log("number of children: " + convoChildren.length);
-        console.log("id: " + id);
-        console.log("childid: " + childid);
 
         setTimeout(function() 
         {
