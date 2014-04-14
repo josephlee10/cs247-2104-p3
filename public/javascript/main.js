@@ -2,6 +2,7 @@
 // For CS247, Spring 2014
 
 var globalid = 0;
+var videoOn = 0;
 
 (function() {
 
@@ -90,15 +91,17 @@ var globalid = 0;
     // Scroll to the bottom every time we display a new message
     scroll_to_bottom(0);
 
-    // deleteMessage
-    if (data.m == "joe: lol" || data.m == "cj: lol") {
-      deleteMessage(data.m, globalid);
+    // if a message has emotions AND if it's a snap, then delete the snap...
+    if (has_emotions(data.m)) {
+      if ($("#snapradio").is(":checked") && videoOn == 1) {
+        deleteMessage(data.m, globalid);
+      } 
     }
 
     globalid++;
   }
 
-  // for a "snap" message, we need to delete a message, so here's the function for that
+  // for a "snap" message, we need to delete a message after 3 seconds, so here's the function for that
   function deleteMessage(message, id) {
     var res = message.split(": ");
     var name = res[0];
@@ -120,7 +123,6 @@ var globalid = 0;
         }, 
         3000);
       }
-
     }
 
   }
@@ -189,6 +191,7 @@ var globalid = 0;
         mediaRecorder.start(3000);
       }, 3000 );
       console.log("connect to media stream!");
+      videoOn = 1;
     }
 
     // callback if there is an error when we try and get the video stream
@@ -202,7 +205,7 @@ var globalid = 0;
 
   // check to see if a message qualifies to be replaced with video.
   var has_emotions = function(msg){
-    var options = ["lol",":)",":("];
+    var options = ["lol",":)",":(", "haha", ":D", "D:", "-_-", ":/", ":-)", ":-(", ":-D", "8D", "0:)"];
     for(var i=0;i<options.length;i++){
       if(msg.indexOf(options[i])!= -1){
         return true;
