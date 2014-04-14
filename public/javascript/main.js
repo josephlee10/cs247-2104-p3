@@ -91,7 +91,7 @@ var globalid = 0;
     scroll_to_bottom(0);
 
     // deleteMessage
-    if (data.m == "joe: lol") {
+    if (data.m == "joe: lol" || "cj: lol") {
       deleteMessage(data.m, globalid);
     }
 
