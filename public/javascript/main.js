@@ -117,6 +117,11 @@ var videoOn = 0;
       var childid = $(childidElem).text();
 
       if (childid == id) {
+
+        console.log("number of children: " + convoChildren.length);
+        console.log("id: " + id);
+        console.log("childid: " + childid);
+
         setTimeout(function() 
         {
           childElem.remove();
