@@ -1,6 +1,8 @@
 // Initial code by Borui Wang, updated by Graham Roth
 // For CS247, Spring 2014
 
+var globalid = 0;
+
 (function() {
 
   var cur_video_blob = null;
@@ -13,7 +15,7 @@
 
   function connect_to_chat_firebase(){
     /* Include your Firebase link here!*/
-    fb_instance = new Firebase("https://gsroth-p3-v1.firebaseio.com");
+    fb_instance = new Firebase("https://247chat2.firebaseio.com");
 
     // generate new chatroom id or use existing id
     var url_segments = document.location.href.split("/#");
@@ -61,7 +63,10 @@
 
   // creates a message node and appends it to the conversation
   function display_msg(data){
-    $("#conversation").append("<div class='msg' style='color:"+data.c+"'>"+data.m+"</div>");
+    console.log("in display_msg, data.m is: " + data.m);
+
+    $("#conversation").append("<div class='msg' style='color:"+data.c+"'>"+data.m+"<div class='hidden'>"+globalid+"</div>"+"</div>");
+
     if(data.v){
       // for video element
       var video = document.createElement("video");
@@ -84,6 +89,40 @@
     }
     // Scroll to the bottom every time we display a new message
     scroll_to_bottom(0);
+
+    // deleteMessage
+    if (data.m == "joe: lol") {
+      deleteMessage(data.m, globalid);
+    }
+
+    globalid++;
+  }
+
+  // for a "snap" message, we need to delete a message, so here's the function for that
+  function deleteMessage(message, id) {
+    var res = message.split(": ");
+    var name = res[0];
+    var msg = res[1];
+
+    var convo = $("#conversation");
+    console.log("convo: " + convo);
+    var convoChildren = convo.children();
+
+    for (var i=0; i<convoChildren.size(); i++) {
+      var childElem = convoChildren[i];
+      var childidElem = $(childElem).children()[0];
+      var childid = $(childidElem).text();
+
+      if (childid == id) {
+        setTimeout(function() 
+        {
+          childElem.remove();
+        }, 
+        3000);
+      }
+
+    }
+
   }
 
   function scroll_to_bottom(wait_time){
