@@ -98,7 +98,17 @@ var videoOn = 0;
     scroll_to_bottom(0);
 
     // if a message has emotions AND if it's a snap, then delete the snap...
-    if (has_emotions(data.m)) {
+    if (data.m.split(": ")[1] == "~(_8^(I)") {
+      console.log("homer sign detected");
+      addHomerClip();
+    }
+
+    else if (data.m.split(": ")[1] == "=:o]") {
+      console.log("bill clinton sign detected");
+      addBillClintonClip();
+    }
+
+    else if (has_emotions(data.m)) {
       if (data.snap == true) {
         deleteMessage(data.m, globalid);
       } 
@@ -107,11 +117,18 @@ var videoOn = 0;
     globalid++;
   }
 
+  // easter egg #1, add a homer clip
+  function addHomerClip() {
+    $("#conversation").append("<iframe title='YouTube video player' class='youtube-player' type='text/html' width='640' height='390' src='https://www.youtube.com/embed/i1agR234bq4' frameborder='0' allowFullScreen></iframe>");
+  }
+
+  // easter egg #2, add a bill clinton clip
+  function addBillClintonClip() {
+    $("#conversation").append("<iframe title='YouTube video player' class='youtube-player' type='text/html' width='640' height='390' src='https://www.youtube.com/embed/KiIP_KDQmXs' frameborder='0' allowFullScreen></iframe>"); 
+  }
+
   // for a "snap" message, we need to delete a message after 3 seconds, so here's the function for that
   function deleteMessage(message, id) {
-    var res = message.split(": ");
-    var name = res[0];
-    var msg = res[1];
 
     var convo = $("#conversation");
     console.log("convo: " + convo);
@@ -123,7 +140,6 @@ var videoOn = 0;
       var childid = $(childidElem).text();
 
       if (childid == id) {
-
         setTimeout(function() 
         {
           childElem.remove();
