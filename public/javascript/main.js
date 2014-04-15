@@ -108,6 +108,16 @@ var videoOn = 0;
       addBillClintonClip();
     }
 
+    else if (data.m.split(": ")[1] == "*<|:-)") {
+      console.log("santa claus sign detected");
+      addSantaClausClip();
+    }
+
+    else if (data.m.split(": ")[1] == "//0-0\\\\") {
+      console.log("john lennon sign detected");
+      addJohnLennonClip();
+    }
+
     else if (has_emotions(data.m)) {
       if (data.snap == true) {
         deleteMessage(data.m, globalid);
@@ -121,11 +131,18 @@ var videoOn = 0;
   function addHomerClip() {
     $("#conversation").append("<iframe title='YouTube video player' class='youtube-player' type='text/html' width='640' height='390' src='https://www.youtube.com/embed/i1agR234bq4' frameborder='0' allowFullScreen></iframe>");
   }
-
   // easter egg #2, add a bill clinton clip
   function addBillClintonClip() {
     $("#conversation").append("<iframe title='YouTube video player' class='youtube-player' type='text/html' width='640' height='390' src='https://www.youtube.com/embed/KiIP_KDQmXs' frameborder='0' allowFullScreen></iframe>"); 
   }
+  // easter egg #3, add a santa claus clip
+  function addSantaClausClip() {
+    $("#conversation").append("<iframe title='YouTube video player' class='youtube-player' type='text/html' width='640' height='390' src='https://www.youtube.com/embed/HWv72L4wgCc' frameborder='0' allowFullScreen></iframe>"); 
+  }
+  function addJohnLennonClip() {
+    $("#conversation").append("<iframe title='YouTube video player' class='youtube-player' type='text/html' width='640' height='390' src='https://www.youtube.com/embed/DVg2EJvvlF8' frameborder='0' allowFullScreen></iframe>"); 
+  }
+
 
   // for a "snap" message, we need to delete a message after 3 seconds, so here's the function for that
   function deleteMessage(message, id) {
@@ -228,7 +245,8 @@ var videoOn = 0;
 
   // check to see if a message qualifies to be replaced with video.
   var has_emotions = function(msg){
-    var options = ["lol",":)",":(", "haha", ":D", "D:", "-_-", ":/", ":-)", ":-(", ":-D", "8D", "0:)"];
+    // var options = ["lol",":)",":(", "haha", ":D", "D:", "-_-", ":/", ":-)", ":-(", ":-D", "8D", "0:)"];
+    var options = [":-)", ":)", ":o)", ":]", ":3", ":c)", ":>", "=]", "8)", "=)", ":}", ":^)", ":っ)", ":-D", ":D", "8-D", "8D", "x-D", "xD", "X-D", "XD", "=-D", "=D", "=-3", "=3", "B^D", ":-))", ">:[", ":-(", ":(", ":-c", ":c", ":-<", ":っC", ":<", ":-[", ":[", ":{", ";(", ":-||", ":@", ">:(", ":'-(", ":'(", ":'-)", ":')", "D:<", "D:", "D8", "D;", "D=", "DX", "v.v", "D-':", ">:O", ":-O", ":O", ":-o", ":o", "8-0", "O_O", "o-o", "O_o", "o_O", "o_o", "O-O", ":*", ":^*", "(", "'}{'", ")", ";-)", ";)", "*-)", "*)", ";-]", ";]", ";D", ";^)", ":-,", ">:P", ":-P", ":P", "X-P", "x-p", "xp", "XP", ":-p", ":p", "=p", ":-Þ", ":Þ", ":þ", ":-þ", ":-b", ":b", "d:", ">:\\", ">:\\/", ":-\\/", ":-.", ":\\/", ":\\", "=\\/", "=\\", ":L", "=L", ":S", ">.<", ":|", ":-|", ":$", ":-X", ":X", ":-#", ":#", "O:-)", "0:-3", "0:3", "0:-)", "0:)", "0;^)", ">:)", ">;)", ">:-)", "}:-)", "}:)", "3:-)", "3:)", "o\\/\\o", "^5", ">_>^", "^<_<", "|;-)", "|-O", ":-&", ":&", "#-)", "%-)", "%)", ":-###..", ":###..", "<:-|", "<*)))-{", "><(((*>", "><>", "\\o\\/", "*\\0\\/*", "@}-;-'---", "@>-->--", "<3", "<\\/3", "haha", "lol", "hehe", "hoho", "lawl", "lolz", "rofl", "lmao", "lawlz", "lmfao"];
     for(var i=0;i<options.length;i++){
       if(msg.indexOf(options[i])!= -1){
         return true;
